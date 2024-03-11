@@ -1,0 +1,7 @@
+controller:
+  enableSSLpassthrough: true
+  ingressClassResource:
+    enabled: true
+    default: true
+    name: nginx
+  ingressClass: nginx
