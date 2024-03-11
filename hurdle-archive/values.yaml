@@ -1,0 +1,59 @@
+app:
+  replicaCount: 2
+
+  image:
+    repository: 644435390668.dkr.ecr.us-east-1.amazonaws.com/nl-hurdle-archive
+    tag: latest
+    pullPolicy: Always
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  configmap:
+    PORT: 5000
+    LOG_LEVEL: DEBUG
+    FLASK_APP: hurdle-archive.py
+    FLASK_DEBUG: 1
+
+#############################
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hostname: hurdle-archive.servegame.com
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+#############################
+
+mysql:
+  fullnameOverride: mysql
+  image:
+    registry: docker.io
+    repository: bitnami/mysql
+    tag: 5.7
+  # architecture: replication
+  architecture: standalone
+  auth:
+    createDatabase: true
+    database: hurdle-archive
+    username: user
+    existingSecret: mysql-secret
+
+  primary:
+    service:
+      port: 3306
+    extraEnvVarsSecret: mysql-secret
+    persistence:
+      enabled: true
+      size: 1Gi
+  # secondary:
+  #   replicaCount: 1
+  #   persistence:
+  #     enabled: true
+  #     size: 1Gi
+  # volumePermissions:
+  #   enabled: true
