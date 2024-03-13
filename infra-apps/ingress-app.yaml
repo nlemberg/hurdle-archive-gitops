@@ -8,15 +8,15 @@ metadata:
 spec:
   project: default
   source:
+    - repoURL: git@github.com:nlemberg/hurdle-archive-gitops.git
+      targetRevision: HEAD
+      ref: app-of-apps
     - repoURL: "https://kubernetes.github.io/ingress-nginx"
       targetRevision: 4.10.0
       chart: ingress-nginx
         helm:
           valueFiles:
             - "$app-of-apps/infra-values/ingress-values.yaml"
-    - repoURL: git@github.com:nlemberg/hurdle-archive-gitops.git
-      targetRevision: HEAD
-      ref: app-of-apps
   destination:
     server: "https://kubernetes.default.svc"
     namespace: ingress
