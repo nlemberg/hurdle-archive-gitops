@@ -14,8 +14,8 @@ spec:
     - repoURL: https://charts.jetstack.io
       targetRevision: 1.14.4
       chart: cert-manager
-        helm:
-          valueFiles:
+      helm:
+        valueFiles:
           - "$app-of-apps/infra-values/cert-manager-values.yaml"
   destination:
     server: "https://kubernetes.default.svc"
