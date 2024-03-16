@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/nlemberg/hurdle-archive-gitops.git
+      targetRevision: HEAD
+      ref: app-of-apps
+    - repoURL: https://charts.jetstack.io
+      targetRevision: 1.14.4
+      chart: cert-manager
+        helm:
+          valueFiles:
+          - "$app-of-apps/infra-values/cert-manager-values.yaml"
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: cert-manager
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    # automated:
+    #   prune: false
+    #   selfHeal: false
