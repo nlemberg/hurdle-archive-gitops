@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluentbit-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/nlemberg/hurdle-archive-gitops.git
+      targetRevision: HEAD
+      ref: app-of-apps
+    - repoURL: https://fluent.github.io/helm-charts
+      targetRevision: 0.44.0
+      chart: fluent-bit
+      helm:
+        valueFiles:
+          - "$app-of-apps/infra-values/fluentbit-values.yaml"
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: efk
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    # automated:
+    #   prune: false
+    #   selfHeal: false
