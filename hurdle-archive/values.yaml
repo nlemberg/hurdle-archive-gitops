@@ -22,7 +22,7 @@ ingress:
   enabled: true
   ingressClassName: nginx
   hostname: hurdle-archive.servegame.com
-  tls: []
+  # tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
