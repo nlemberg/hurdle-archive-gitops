@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kibana-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/nlemberg/hurdle-archive-gitops.git
+      targetRevision: HEAD
+      ref: app-of-apps
+    - repoURL: https://helm.elastic.co
+      targetRevision: 8.5.1
+      chart: kibana
+      helm:
+        valueFiles:
+          - "$app-of-apps/infra-values/kibana-values.yaml"
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: efk
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    # automated:
+    #   prune: false
+    #   selfHeal: false

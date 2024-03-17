@@ -1,0 +1,7 @@
+persistence:
+  labels:
+    enabled: true
+secret:
+  enabled: true
+  password: "9fVpTSmmeC3IzEiE" # generated randomly if not defined
+replicas: 2

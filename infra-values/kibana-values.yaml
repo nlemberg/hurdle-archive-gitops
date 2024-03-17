@@ -1,0 +1,6 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: hurdle-archive.servegame.com
+      paths:
+        - path: /kibana
