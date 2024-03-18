@@ -48,7 +48,7 @@ config:
         Skip_Long_Lines On
 
     [INPUT]
-        Alias mysqly
+        Alias mysql
         Name tail
         Path /var/log/containers/mysql*.log
         multiline.parser docker, cri
@@ -57,9 +57,9 @@ config:
         Skip_Long_Lines On
 
     [INPUT]
-        Alias ingress-controller
+        Alias ingress
         Name tail
-        Path /var/log/containers/controller*.log
+        Path /var/log/containers/ingress*.log
         multiline.parser docker, cri
         Tag kube.*
         Mem_Buf_Limit 100MB
@@ -68,7 +68,7 @@ config:
     [INPUT]
         Alias fluent-bit
         Name tail
-        Path /var/log/containers/fluent-bit*.log
+        Path /var/log/containers/fluentbit*.log
         multiline.parser docker, cri
         Tag kube.*
         Mem_Buf_Limit 200MB
