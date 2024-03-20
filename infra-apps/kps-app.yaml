@@ -13,7 +13,7 @@ spec:
       ref: app-of-apps
     - repoURL: https://prometheus-community.github.io/helm-charts
       targetRevision: 57.0.3
-      chart: kps
+      chart: kube-prometheus-stack
       helm:
         valueFiles:
           - "$app-of-apps/infra-values/kps-values.yaml"
